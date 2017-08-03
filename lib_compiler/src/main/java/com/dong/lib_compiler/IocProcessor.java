@@ -4,7 +4,6 @@ import com.dong.lib_annotation.BindView;
 import com.google.auto.service.AutoService;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -23,7 +22,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 
 /**
  * Element
@@ -78,7 +76,7 @@ public class IocProcessor extends AbstractProcessor {
 
             ProxyInfo proxyInfo = mProxyMap.get(fqClassName);
             if (proxyInfo == null) {
-                proxyInfo = new ProxyInfo(elementUtils, classElement);
+                proxyInfo = new ProxyInfo(processingEnv.getFiler(),elementUtils, variableElement);
                 mProxyMap.put(fqClassName, proxyInfo);
             }
 
@@ -89,18 +87,15 @@ public class IocProcessor extends AbstractProcessor {
 
         for (String key : mProxyMap.keySet()) {
             ProxyInfo proxyInfo = mProxyMap.get(key);
+
             try {
-                JavaFileObject jfo = processingEnv.getFiler().createSourceFile(
-                        proxyInfo.getProxyClassFullName(),
-                        proxyInfo.getTypeElement());
-                Writer writer = jfo.openWriter();
-                writer.write(proxyInfo.generateJavaCode());
-                writer.flush();
-                writer.close();
+                proxyInfo.generateJavaFile();
             } catch (IOException e) {
                 error(proxyInfo.getTypeElement(),
                         "Unable to write injector for type %s: %s",
                         proxyInfo.getTypeElement(), e.getMessage());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
 
         }
