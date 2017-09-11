@@ -42,9 +42,9 @@ public class ViewIndicator extends View implements ViewPager.OnPageChangeListene
     private List<RectF> rectList = new ArrayList<>();
     private SparseArray<Float> rectWidthArray = new SparseArray<>();
 
-    private boolean followTouch = true;    // 是否跟随手指滑动
     private NavigatorHelper navigatorHelper = new NavigatorHelper();
-    private Interpolator linearInterpolator = new LinearInterpolator();
+    private Interpolator mStartInterpolator = new LinearInterpolator();
+    private Interpolator mEndInterpolator = new LinearInterpolator();
 
     public ViewIndicator(Context context) {
         super(context);
@@ -163,9 +163,6 @@ public class ViewIndicator extends View implements ViewPager.OnPageChangeListene
                 canvas.drawRoundRect(rectF, roundRadius, roundRadius, paint);
             }
 
-//            rectF.right = rectF.left + rectWidth;
-//
-//            canvas.drawRoundRect(rectF, roundRadius, roundRadius, paint);
         }
     }
 
@@ -186,33 +183,24 @@ public class ViewIndicator extends View implements ViewPager.OnPageChangeListene
 
     @Override
     public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
-//        if (followTouch) {
-//            currIndex = index;
-////            float rectWidth = minRectWidth + (maxRectWidth - minRectWidth) * linearInterpolator.getInterpolation(enterPercent);
-//            rectWidthArray.put(index, (float) maxRectWidth);
-//            invalidate();
-//        }
+        float rectWidth = minRectWidth + (maxRectWidth - minRectWidth) * mStartInterpolator.getInterpolation(enterPercent);
+        rectWidthArray.put(index, rectWidth);
+        invalidate();
     }
 
     @Override
     public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
-//        if (followTouch) {
-////            float rectWidth = maxRectWidth + (minRectWidth - maxRectWidth) * linearInterpolator.getInterpolation(leavePercent);
-//            rectWidthArray.put(index, (float) minRectWidth);
-//            invalidate();
-//        }
+        float rectWidth = maxRectWidth + (minRectWidth - maxRectWidth) * mEndInterpolator.getInterpolation(leavePercent);
+        rectWidthArray.put(index, rectWidth);
+        invalidate();
     }
 
     @Override
     public void onSelected(int index, int totalCount) {
         currIndex = index;
-        rectWidthArray.put(index, (float) maxRectWidth);
-        invalidate();
     }
 
     @Override
     public void onDeselected(int index, int totalCount) {
-        rectWidthArray.put(index, (float) minRectWidth);
-        invalidate();
     }
 }
