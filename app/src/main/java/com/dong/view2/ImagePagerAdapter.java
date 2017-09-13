@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dong.R;
+import com.dong.glide.GlideRoundTransform;
 
 /**
  * 🌑🌒🌓🌔🌕🌖🌗🌘
@@ -42,7 +44,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         return getRealCount();
     }
 
-    public int getRealCount(){
+    public int getRealCount() {
         return imgRes.length;
     }
 
@@ -70,7 +72,10 @@ public class ImagePagerAdapter extends PagerAdapter {
         }
 
         public void initData(int position) {
-            imageView.setImageResource(imgRes[position]);
+            Glide.with(imageView.getContext()).load(imgRes[position])
+                    .transform(new GlideRoundTransform(imageView.getContext(), 10))
+                    .into(imageView);
+//            imageView.setImageResource();
         }
     }
 }

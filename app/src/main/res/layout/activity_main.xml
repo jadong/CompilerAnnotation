@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="10dp"
         android:clipChildren="false"
         android:gravity="center"
         android:orientation="vertical">
@@ -18,11 +19,11 @@
         <com.dong.view2.InfiniteBanner
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
             android:layout_centerInParent="true"
             android:clipChildren="false"
-            android:scrollbars="none"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:scrollbars="none" />
 
     </RelativeLayout>
 
@@ -30,13 +31,14 @@
         android:id="@+id/magic_indicator"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 
     <com.dong.view2.Image3DSwitchView
         android:id="@+id/image3DSwitchView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:visibility="gone"
         android:layout_marginTop="50dp">
 
         <com.dong.view2.Image3DView
@@ -83,5 +85,10 @@
 
     </com.dong.view2.Image3DSwitchView>
 
+    <com.dong.view3.OverlayImageView
+        android:id="@+id/overlayImageView"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
 
 </LinearLayout>

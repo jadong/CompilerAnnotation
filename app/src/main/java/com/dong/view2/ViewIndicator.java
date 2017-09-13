@@ -62,6 +62,14 @@ public class ViewIndicator extends View implements ViewPager.OnPageChangeListene
         init(context);
     }
 
+    public void setNormalColor(int normalColor) {
+        this.normalColor = normalColor;
+    }
+
+    public void setSelectColor(int selectColor) {
+        this.selectColor = selectColor;
+    }
+
     public void init(Context context) {
         minRectWidth = UIUtil.dip2px(context, 6);
         maxRectWidth = UIUtil.dip2px(context, 15);

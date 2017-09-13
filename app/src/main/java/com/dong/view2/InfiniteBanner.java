@@ -34,12 +34,14 @@ public class InfiniteBanner extends LoopViewPager {
         mBannerController.startAutoScroll();
     }
 
-    @Override public boolean dispatchTouchEvent(MotionEvent ev) {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         mBannerController.dispatchTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override protected void onDetachedFromWindow() {
+    @Override
+    protected void onDetachedFromWindow() {
         mBannerController.onDetachedFromWindow();
         super.onDetachedFromWindow();
     }
